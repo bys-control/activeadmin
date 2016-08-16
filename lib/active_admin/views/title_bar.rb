@@ -6,16 +6,23 @@ module ActiveAdmin
         super(id: "title_bar")
         @title = title
         @action_items = action_items
-        build_titlebar_left
-        build_titlebar_right
+
+        div class: "row wrapper border-bottom white-bg page-heading" do
+          div class: "col-lg-6" do
+            build_titlebar_left
+          end
+          div class: "col-lg-6" do
+            build_titlebar_right
+          end
+        end
       end
 
       private
 
       def build_titlebar_left
         div id: "titlebar_left" do
-          build_breadcrumb
-          build_title_tag
+          build_title_tag.to_s
+          build_breadcrumb.to_s
         end
       end
 
@@ -34,10 +41,10 @@ module ActiveAdmin
           breadcrumb_links
         end
         return unless links.present? && links.is_a?(::Array)
-        span class: "breadcrumb" do
+        ol class: "breadcrumb" do
           links.each do |link|
-            text_node link
-            span(separator, class: "breadcrumb_sep")
+            li text_node link
+            # span(separator, class: "breadcrumb_sep")
           end
         end
       end

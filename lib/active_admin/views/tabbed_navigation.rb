@@ -41,17 +41,20 @@ module ActiveAdmin
 
       def build_menu_item(item)
         li id: item.id do |li|
-          li.add_class "current" if item.current? assigns[:current_tab]
+          li.add_class "active" if item.current? assigns[:current_tab]
 
           if url = item.url(self)
-            text_node link_to item.label(self), url, item.html_options
+            a href: url do
+              i item.html_options
+              span item.label(self), class: "nav-label"
+              span class: "fa arrow"
+            end
           else
             span item.label(self), item.html_options
           end
 
           if children = item.items(self).presence
-            li.add_class "has_nested"
-            ul do
+            ul class: "nav nav-second-level collapse" do |ul|
               children.each{ |child| build_menu_item child }
             end
           end
