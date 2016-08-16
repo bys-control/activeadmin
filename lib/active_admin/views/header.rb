@@ -12,21 +12,6 @@ module ActiveAdmin
         build_site_title
         build_global_navigation
         build_utility_navigation
-        content_for_layout
-      end
-
-      def content_for_layout
-        content_for :global_navigation do
-          @global_navigation.content
-        end
-
-        content_for :utility_navigation do
-          @utility_navigation.content
-        end
-
-        content_for :site_title do
-          @site_title.content
-        end        
       end
 
       def build_site_title
@@ -34,6 +19,10 @@ module ActiveAdmin
 
         within @site_title do
           insert_tag view_factory.site_title, @namespace
+        end
+
+        content_for :site_title do
+          @site_title.content
         end
 
         text_node @site_title
@@ -46,6 +35,10 @@ module ActiveAdmin
           insert_tag view_factory.global_navigation, @menu, class: 'header-item tabs nav'
         end
 
+        content_for :global_navigation do
+          @global_navigation.content
+        end
+
         text_node @global_navigation
       end
 
@@ -54,6 +47,10 @@ module ActiveAdmin
 
         within @utility_navigation do
           insert_tag view_factory.utility_navigation, @utility_menu, id: "utility_nav", class: 'header-item tabs'
+        end
+
+        content_for :utility_navigation do
+          @utility_navigation.content
         end
 
         text_node @utility_navigation
